@@ -1,4 +1,4 @@
-package org.hushenmin.mr.tool;
+package org.hushenmin.mr.counter;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
@@ -50,6 +50,7 @@ public class WordCount extends Configured implements Tool {
         @Override
         protected void map(LongWritable k1, Text v1, Context context) throws IOException, InterruptedException {
             //super.map(key, value, context);
+            context.getCounter("mr_counter","map_input_kv_counter").increment(1);
             String[] strings = v1.toString().split("\t");
             for (String str :strings){
                 k2.set(str);
@@ -58,12 +59,16 @@ public class WordCount extends Configured implements Tool {
 
         }
     }
+    public static enum Counter{
+        reduce_kv_output_counter
+    }
     public static class  MyReducer extends Reducer<Text,IntWritable,Text,IntWritable>{
         Text k3 = new Text();
         IntWritable v3 = new IntWritable();
         @Override
         protected void reduce(Text k2, Iterable<IntWritable> v2, Context context) throws IOException, InterruptedException {
             //super.reduce(key, values, context);
+           context.getCounter(Counter.reduce_kv_output_counter).increment(1);
             int sum = 0;
             for (IntWritable i : v2){
                 sum +=i.get();
