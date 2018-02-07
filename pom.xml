@@ -106,6 +106,7 @@
         </repository>
 
     </repositories>
+    <!--
     <build>
         <plugins>
 
@@ -116,7 +117,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass></mainClass>
+                            <mainClass>org.hushenmin.mr.secondsort.SecondSortMapReduce</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -137,5 +138,5 @@
         </plugins>
     </build>
 
-
+-->
 </project>
